@@ -1,0 +1,52 @@
+<ion-pane class="standard">
+
+        <div class="topBar">
+            <a href="#/home"><i class="icon ion-android-arrow-back logout"></i></a>
+        </div>
+
+        <h1 class="title">CHALLENGING</h1>
+        <h4 class="subtitle">{{challenge.data.oppenent.name}}</h4>
+
+        <div class="circleImg">
+            <img ng-src="http://graph.facebook.com/{{challenge.data.oppenent.id}}/picture">
+        </div>
+
+        <div class="kindaBtn button-alloyBlue profileBtn" ng-click="displayEmojis = false">
+            <div>
+                <img src="img/enter-words.png" class="profileImg" />
+                <input type="text" class="captionContainer" placeholder="Word to Guess" ng-model="answer">
+            </div>
+        </div>
+        
+        <div class="kindaBtn button-alloyBlue profileBtn" ng-click="displayEmojis = true">
+            <div>
+                <img src="img/smile.png" class="profileImg" />
+                <span class="captionContainer guessEmoji">
+                    <span ng-repeat="cap in data.caption track by $index" ng-bind-html="cap | emoji"></span>
+                </span>
+            </div>
+        </div>
+        
+        <button class="button button-alloyGreen block"
+                ng-click="challenge.sendChallenge(answer, data.caption)">
+            SEND CHALLENGE
+        </button>
+
+
+
+
+        <div class="card displayEmojis" ng-show="displayEmojis">
+            <div class="item item-divider">
+                <div class="button-bar">
+                    <a class="button" ng-click="data.decrease()"><i class="icon ion-arrow-left-b"></i></a>
+                    <a class="button" ng-click="data.increase()"><i class="icon ion-arrow-right-b"></i></a>
+                    <a class="button" ng-click="displayEmojis = false"><i class="icon ion-close-round"></i></a>
+                </div>
+            </div>
+            <div class="item item-text-wrap">
+                <span style="display:inline-block; zoom: 1.5;" ng-repeat="m in data.message" ng-if="$index > data.min && $index < data.max" select-emoji ng-bind-html="m | emoji">
+                </span>
+            </div>
+        </div>
+
+</ion-pane>

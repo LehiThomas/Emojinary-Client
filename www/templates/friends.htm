@@ -1,0 +1,24 @@
+<ion-pane class="friends">
+    
+    <div class="topBar">
+        <a href="#/home"><i class="icon ion-android-arrow-back logout"></i></a>
+    </div>
+    <h1 class="title">Choose Your Oppenent</h1>
+    <button class="button button-alloyGreen profileBtn">
+        <div>
+            <img src="img/random.png" class="profileImg"/>
+            <span class="name">Choose Random</span>
+        </div>    
+    </button>
+    
+    <button class="button button-alloyGreen profileBtn" 
+            ng-repeat="friend in friends.data" 
+            ng-click="chooseOppenent(friend)">
+        <div>
+            <img ng-src="http://graph.facebook.com/{{friend.id}}/picture?width=270&height=270" class="profileImg"/>
+            <span class="name">{{friend.name}}</span>
+            <span class="score">{{friend.score}}</span>
+        </div>    
+    </button>
+    
+</ion-pane>
