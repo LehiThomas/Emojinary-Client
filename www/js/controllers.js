@@ -22,7 +22,7 @@ emojinary.controller('appCtrl', function($scope, pushNotify){})
 
 .controller('friendsCtrl', function ($scope, friends, createChallenge) {
     $scope.friends = friends;
-    $scope.chooseopponent = function(opponent){
+    $scope.chooseOpponent = function(opponent){
         createChallenge.data.opponent = opponent;
         window.location.href = "#/home";
     }
@@ -59,7 +59,7 @@ emojinary.controller('appCtrl', function($scope, pushNotify){})
 
 
 .controller('CreateChallangeCtrl', function ($scope, createChallenge) {
-    if(!createChallenge.data.opponent){
+    if(!createChallenge.data.opponent || createChallenge.data.opponent == 'Random'){
         createChallenge.data.opponent = {
             name: 'Random',
             id: 0

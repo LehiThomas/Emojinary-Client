@@ -15,7 +15,7 @@
     <h2 class="vs">VS</h2>
     <a href="#/friends">
         <button class="button button-alloyGreen profileBtn">
-            <div ng-if="!challenge.data.opponent || challenge.data.opponent == 'Random'">
+            <div ng-if="!challenge.data.opponent || challenge.data.opponent == 'Random' || challenge.data.opponent.name == 'Random'">
                 <img src="img/random.png" class="profileImg"/>
                 <span class="name">Random</span>
             </div>
