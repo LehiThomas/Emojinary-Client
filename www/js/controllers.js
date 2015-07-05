@@ -68,26 +68,31 @@ emojinary.controller('appCtrl', function($scope, pushNotify){})
     $scope.data = {};
     $scope.data.message = allEmojis;
     $scope.data.min = 0;
-    $scope.data.max = 26
+    $scope.data.max = 19
     $scope.data.caption = [];
     $scope.challenge = createChallenge;
 
     $scope.data.increase = function(){
         if($scope.data.max > allEmojis.length) return;
-        $scope.data.min = $scope.data.min + 25;
-        $scope.data.max = $scope.data.max + 25;
+        $scope.data.min = $scope.data.min + 18;
+        $scope.data.max = $scope.data.max + 18;
     }
+
     $scope.data.delete = function(index){
-+        $scope.data.caption.splice(index, 1);
+        $scope.data.caption.splice(index, 1);
     }
+
     $scope.data.decrease = function(){
         if($scope.data.min <= 0) return;
-        $scope.data.min = $scope.data.min - 25;
-        $scope.data.max = $scope.data.max - 25;
+        $scope.data.min = $scope.data.min - 18;
+        $scope.data.max = $scope.data.max - 18;
     }
+
     $scope.buildCaption = function(icon){
         $scope.$apply(function(){
+            if($scope.data.caption.length <= 9) {
             $scope.data.caption.push(icon);
+            }
         });
     }
 })

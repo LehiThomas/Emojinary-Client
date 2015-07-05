@@ -8,7 +8,7 @@
         <h4 class="subtitle">{{challenge.data.opponent.name}}</h4>
 
         <div class="circleImg">
-            <img ng-if="challenge.data.opponent.id == 0" src="img/random.png">
+            <img ng-if="challenge.data.opponent.id == 0 || challenge.data.opponent.name == 'Random'" src="img/random.png">
             <img ng-if="challenge.data.opponent.id != 0" ng-src="http://graph.facebook.com/{{challenge.data.opponent.id}}/picture">
         </div>
 
@@ -19,9 +19,9 @@
             </div>
         </div>
 
-        <div class="kindaBtn button-alloyBlue profileBtn" ng-click="displayEmojis = true">
+        <div class="kindaBtn button-alloyBlue profileBtn" ng-click="displayEmojis = true" style="min-height: 87px;">
             <div>
-                <img src="img/smile.png" class="profileImg" />
+                <img src="img/smile.png" class="profileImg" style="padding-top: 10px;"/>
                 <span class="captionContainer guessEmoji">
                     <span ng-repeat="cap in data.caption track by $index"
                           ng-bind-html="cap | emoji"
@@ -47,7 +47,10 @@
                 </div>
             </div>
             <div class="item item-text-wrap">
-                <span style="display:inline-block; zoom: 1.5;" ng-repeat="m in data.message" ng-if="$index > data.min && $index < data.max" select-emoji ng-bind-html="m | emoji">
+                <span style="display:inline-block; zoom: 1.5;"
+                      ng-repeat="m in data.message"
+                      ng-if="$index > data.min && $index < data.max" select-emoji
+                      ng-bind-html="m | emoji">
                 </span>
             </div>
         </div>

@@ -19,7 +19,7 @@
                 <img src="img/random.png" class="profileImg"/>
                 <span class="name">Random</span>
             </div>
-            <div ng-if="challenge.data.opponent && challenge.data.opponent != 'Random'">
+            <div ng-if="challenge.data.opponent && challenge.data.opponent != 'Random' && challenge.data.opponent.name != 'Random'">
                 <img ng-src="http://graph.facebook.com/{{challenge.data.opponent.id}}/picture?width=270&height=270"
                      class="profileImg"/>
                 <span class="name">{{challenge.data.opponent.name}}</span>
@@ -30,6 +30,8 @@
     <a href="#/createChallange">
         <button class="button button-alloyRed block">challenge</button>
     </a>
+
+
     <a href="#/challenges" ng-controller="challengesCtrl">
         <div class="ground">
             <div class="pendingChallanges">{{ data.totalChallenges }}</div>
