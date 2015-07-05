@@ -5,10 +5,11 @@
         </div>
 
         <h1 class="title">CHALLENGING</h1>
-        <h4 class="subtitle">{{challenge.data.oppenent.name}}</h4>
+        <h4 class="subtitle">{{challenge.data.opponent.name}}</h4>
 
         <div class="circleImg">
-            <img ng-src="http://graph.facebook.com/{{challenge.data.oppenent.id}}/picture">
+            <img ng-if="challenge.data.opponent.id == 0" src="img/random.png">
+            <img ng-if="challenge.data.opponent.id != 0" ng-src="http://graph.facebook.com/{{challenge.data.opponent.id}}/picture">
         </div>
 
         <div class="kindaBtn button-alloyBlue profileBtn" ng-click="displayEmojis = false">
@@ -17,16 +18,18 @@
                 <input type="text" class="captionContainer" placeholder="Word to Guess" ng-model="answer">
             </div>
         </div>
-        
+
         <div class="kindaBtn button-alloyBlue profileBtn" ng-click="displayEmojis = true">
             <div>
                 <img src="img/smile.png" class="profileImg" />
                 <span class="captionContainer guessEmoji">
-                    <span ng-repeat="cap in data.caption track by $index" ng-bind-html="cap | emoji"></span>
+                    <span ng-repeat="cap in data.caption track by $index"
+                          ng-bind-html="cap | emoji"
+                          ng-click="data.delete($index)"></span>
                 </span>
             </div>
         </div>
-        
+
         <button class="button button-alloyGreen block"
                 ng-click="challenge.sendChallenge(answer, data.caption)">
             SEND CHALLENGE

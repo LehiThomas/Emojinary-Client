@@ -3,36 +3,37 @@
         <a href="#/"><i class="icon ion-log-out logout"></i></a>
     </div>
     <h1 class="title">CHALLENGE</h1>
-    
+
     <p class="instructions">Select from your list of friends or choose random and play against anyone and everyone.</p>
     <button class="button button-alloyBlue profileBtn">
         <div>
             <img ng-src="http://graph.facebook.com/{{user.data.id}}/picture?width=270&height=270" class="profileImg"/>
             <span class="name">{{user.data.name}}</span>
             <span class="score">{{user.data.score}}</span>
-        </div>    
+        </div>
     </button>
     <h2 class="vs">VS</h2>
     <a href="#/friends">
         <button class="button button-alloyGreen profileBtn">
-            <div ng-if="!challenge.data.oppenent">
+            <div ng-if="!challenge.data.opponent || challenge.data.opponent == 'Random'">
                 <img src="img/random.png" class="profileImg"/>
+                <span class="name">Random</span>
             </div>
-            <div ng-if="challenge.data.oppenent">
-                <img ng-src="http://graph.facebook.com/{{challenge.data.oppenent.id}}/picture?width=270&height=270"
+            <div ng-if="challenge.data.opponent && challenge.data.opponent != 'Random'">
+                <img ng-src="http://graph.facebook.com/{{challenge.data.opponent.id}}/picture?width=270&height=270"
                      class="profileImg"/>
-                <span class="name">{{challenge.data.oppenent.name}}</span>
-                <span class="score">{{challenge.data.oppenent.score}}</span>
-            </div> 
+                <span class="name">{{challenge.data.opponent.name}}</span>
+                <span class="score">{{challenge.data.opponent.score}}</span>
+            </div>
         </button>
     </a>
     <a href="#/createChallange">
         <button class="button button-alloyRed block">challenge</button>
     </a>
-    <a href="#/challenges">
+    <a href="#/challenges" ng-controller="challengesCtrl">
         <div class="ground">
-            <div class="pendingChallanges">3</div>    
+            <div class="pendingChallanges">{{ data.totalChallenges }}</div>
         </div>
     </a>
-    
+
 </ion-pane>

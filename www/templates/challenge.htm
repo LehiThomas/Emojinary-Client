@@ -7,7 +7,7 @@
         <h1 class="title">CHALLENGE</h1>
 
         <div class="circleImg">
-            <img ng-src="http://graph.facebook.com/{{challenge.selectedChallenge.oppenent}}/picture">
+            <img ng-src="http://graph.facebook.com/{{challenge.selectedChallenge.opponent}}/picture">
         </div>
 
         <div class="kindaBtn button-alloyBlue profileBtn" ng-click="displayEmojis = true">
@@ -18,14 +18,14 @@
                 </span>
             </div>
         </div>
-    
+
         <div class="kindaBtn button-alloyBlue profileBtn" ng-click="displayEmojis = false">
             <div>
                 <img src="img/enter-words.png" class="profileImg" />
                 <input type="text" class="captionContainer" placeholder="Word to Guess" ng-model="answer">
             </div>
         </div>
-        
+
         <button class="button button-alloyGreen block"
                 ng-click="checkAnswer(answer)">
             SUBMIT GUESS
