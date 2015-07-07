@@ -1,13 +1,13 @@
 emojinary.controller('appCtrl', function($scope, pushNotify){})
 
-.controller('login', function ($scope, $ionicModal, $timeout, ngFB, $location) {
+.controller('login', function ($scope, $ionicModal, $timeout, ngFB, $location, user) {
     $scope.fbLogin = function () {
         ngFB.login({
             scope: 'email,read_stream,publish_actions,user_friends'
         }).then(
             function (response) {
                 if (response.status === 'connected') {
-                    $location.path('/home');
+                    user.getFullUser();
                 } else {
                     alert('Facebook login failed');
                 }

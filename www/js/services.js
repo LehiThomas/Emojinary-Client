@@ -1,25 +1,20 @@
 emojinary.factory('user', function (ngFB, $http, pushNotify) {
 	var obj = {};
 
-	obj.data = {};
-
-	ngFB.api({
-		path: '/me',
-		params: {
-			fields: 'id,name'
-		}
-	}).then(getStats,error);
-
-	function getStats(user){
-		$http.get("http://104.131.161.4:3000/user?id="+user.id).success(function(userSet){
-			obj.data = userSet;
-			obj.data.name = user.name;
-			if(!userSet.regid){
-				// for mobile dev
-				//pushNotify.register(user.id);
-			}
-		});
-	}
+    obj.getFullUser = function(){
+        ngFB.api({
+            path: '/me',
+            params: {
+                fields: 'id,name'
+            }
+	   }).then(function(fbUser){
+            $http.get("http://104.131.161.4:3000/user?id="+fbUser.id).success(function(userSet){
+                obj.data = userSet;
+                obj.data.name = fbUser.name;
+                window.location = '#/home'
+            });
+        },error);
+    }
 
 	function error(err){
 		console.log(err)
@@ -139,6 +134,10 @@ emojinary.factory('user', function (ngFB, $http, pushNotify) {
 	var obj = {};
 
 	obj.getChallenges = function(){
+        if(!user.data){
+            window.location = '#/';
+            return;
+        }
 		return $http.get("http://104.131.161.4:3000/challenges?id="+user.data.id);
 	}
 
