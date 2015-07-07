@@ -90,7 +90,7 @@ emojinary.controller('appCtrl', function($scope, pushNotify){})
 
     $scope.buildCaption = function(icon){
         $scope.$apply(function(){
-            if($scope.data.caption.length <= 9) {
+            if($scope.data.caption.length <= 4) {
             $scope.data.caption.push(icon);
             }
         });

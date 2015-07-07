@@ -19,9 +19,9 @@
             </div>
         </div>
 
-        <div class="kindaBtn button-alloyBlue profileBtn" ng-click="displayEmojis = true" style="min-height: 87px;">
+        <div class="kindaBtn button-alloyBlue profileBtn" ng-click="displayEmojis = true">
             <div>
-                <img src="img/smile.png" class="profileImg" style="padding-top: 10px;"/>
+                <img src="img/smile.png" class="profileImg"/>
                 <span class="captionContainer guessEmoji">
                     <span ng-repeat="cap in data.caption track by $index"
                           ng-bind-html="cap | emoji"
