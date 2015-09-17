@@ -15,9 +15,234 @@ $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
 
+$balanced:         #00ef87 !default;
+$balanced-shadow:  #02d87b !default;
+$positive:         #00aeef !default;
+$positive-shadow:  #0090c5 !default;
+$assertive:        #E16E70 !default;
+$assertive-shadow: #B85B5D !default;
+
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+/* Empty. Add your own CSS if you like */
+.captionContainer::-webkit-input-placeholder {
+	color: white;
+	font-style: italic;
+}
+
+a {
+	text-decoration: none !important;
+}
+
+
+div .captionContainer {
+	text-align: center;
+	display: inline-block;
+	height: 2.5em;
+	width: 12em;
+	vertical-align: top;
+	margin-top: 0.6em;
+	background-color: transparent;
+	color: white;
+}
+
+.button.button-positive, .kindaBtn.button-alloyBlue {
+	border-color: $positive;
+	background-color: $positive;
+	color: $light;
+	border-radius: 50px;
+	box-shadow: 5px 9px 1px -3px $positive-shadow;
+}
+
+.button.button-balanced, .kindaBtn.button-alloyGreen {
+	border-color: $balanced;
+	background-color: $balanced;
+	color: $light;
+	border-radius: 50px;
+	box-shadow: 5px 9px 1px -3px $balanced-shadow;
+}
+
+.button.button-assertive {
+	border-color: $assertive;
+	background-color: $assertive;
+	color: $light;
+	border-radius: 50px;
+	box-shadow: 5px 9px 1px -3px $assertive-shadow;
+}
+
+.kindaBtn{
+	position: relative;
+	display: inline-block;
+	padding: 0 12px;
+	min-height: 47px;
+	border-width: 1px;
+	border-style: solid;
+	vertical-align: top;
+	text-align: center;
+	text-overflow: ellipsis;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.block {
+	display: block;
+	margin: 0 auto;
+}
+
+.profileBtn {
+	margin: 1em;
+	min-width: 13em;
+}
+
+.profileBtn div{
+	height: 3em;
+	margin: 0.3em;
+}
+
+.profileBtn .profileImg{
+	width: 3em;
+	border-radius: 100%;
+}
+
+.profileBtn .name{
+	vertical-align: top;
+	display: inline-block;
+	max-width: 89px;
+	line-height: 1em;
+	height: 3em;
+	padding: 0.5em 0.2em;
+}
+
+.profileBtn .score{
+	vertical-align: top;
+	display: inline-block;
+	font-size: 2em;
+}
+
+/*************************
+* Login Page
+*************************/
+
+.loginPage {
+	background-color: $positive;
+}
+
+.loginPage .logo {
+	position: absolute;
+	top: 20%;
+	left: 50%;
+	width: 250px;
+	margin-left: -125px;
+}
+
+.loginPage .facebook {
+	position: absolute;
+	bottom: 20%;
+	left: 50%;
+	width: 100px;
+	margin-left: -50px;
+	cursor: pointer;
+}
+
+
+.standard {
+	background-image: url("../img/cloudy.png");
+	background-size: cover;
+	text-align: center;
+}
+
+.friends {
+	background-image: url("../img/cloudy.png");
+	background-size: cover;
+	text-align: center;
+}
+
+.topBar {
+	text-align: left;
+	font-size: 2.5em;
+}
+
+.topBar i {
+	margin: 0.2em;
+	color: white;
+	display: block;
+}
+
+.title {
+	font-size: 3em;
+	color: white;
+}
+
+.subtitle{
+	font-size: 2em;
+	color: white;
+}
+
+.instructions {
+	width: 17em;
+	font-size: 1em;
+	margin: 0 auto;
+	color: white;
+}
+
+.vs {
+	color: white;
+	margin: 0.3em 0;
+}
+
+.pendingChallanges {
+	border-radius: 100%;
+	width: 1.8em;
+	height: 1.8em;
+	font-size: 1.8em;
+	line-height: 1.8em;
+	color: white;
+	background-color: $assertive;
+	cursor: pointer;
+	position: absolute;
+	left: 50%;
+	margin-left: -0.9em;
+	bottom: 0.5em;
+}
+
+.ground{
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 4.5em;
+	background-image: url("../img/ground.png");
+	background-size: cover;
+	background-position: 0;
+	background-repeat: no-repeat;
+}
+
+.circleImg{
+	border-radius: 100%;
+	width: 5em;
+	height: 5em;
+	border-color: $positive;
+	background-color: $positive;
+	box-shadow: 5px 9px 1px -3px $positive-shadow;
+	margin: 0 auto;
+}
+
+.circleImg img{
+	border-radius: 100%;
+	height: 4em;
+	margin: 0.5em auto;
+}
+
+.guessEmoji i{
+	zoom: 1.25;
+}
+
+.displayEmojis{
+}
+
+.emojiBox{
+	background-color: balanced;
+}

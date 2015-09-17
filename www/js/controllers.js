@@ -47,7 +47,7 @@ emojinary.controller('appCtrl', function($scope, pushNotify){})
     $scope.checkAnswer = function(answer){
         if(answer === challenge.selectedChallenge.answer){
             alert("Correct!");
-            $http.post("http://104.131.161.4:3000/answer", {_id: challenge.selectedChallenge._id, opponent: challenge.selectedChallenge.opponent})
+            $http.post("http://127.0.0.1:3000/answer", {_id: challenge.selectedChallenge._id, opponent: challenge.selectedChallenge.opponent})
                 .success(function(data){
                 window.location = "#/home";
             });
@@ -65,32 +65,56 @@ emojinary.controller('appCtrl', function($scope, pushNotify){})
             id: 0
         };
     }
+
     $scope.data = {};
     $scope.data.message = allEmojis;
+    $scope.data.length = ($scope.data.message).length;
     $scope.data.min = 0;
-    $scope.data.max = 19
+    $scope.data.max = 196;
     $scope.data.caption = [];
     $scope.challenge = createChallenge;
 
-    $scope.data.increase = function(){
-        if($scope.data.max > allEmojis.length) return;
-        $scope.data.min = $scope.data.min + 18;
-        $scope.data.max = $scope.data.max + 18;
+
+    $scope.data.changeMinMax = function(element){
+        switch(element) {
+            case "people":
+                $scope.data.min = 0;
+                $scope.data.max = 196;
+                break;
+            case "nature":
+                $scope.data.min = 195;
+                $scope.data.max = 320;
+                break;
+            case "items":
+                $scope.data.min = 319;
+                $scope.data.max = 570;
+                break;
+            case "house":
+                $scope.data.min = 569;
+                $scope.data.max = 678;
+                break;
+            case "random":
+                $scope.data.min = 677;
+                $scope.data.max = 872;
+                break;
+            default:
+                $scope.data.min = 0;
+                $scope.data.max = 196;
+        }
+    }
+
+    $scope.data.passEmojis = function(caption){
+        console.log(caption);
+        $scope.data.caption = caption;
     }
 
     $scope.data.delete = function(index){
         $scope.data.caption.splice(index, 1);
     }
 
-    $scope.data.decrease = function(){
-        if($scope.data.min <= 0) return;
-        $scope.data.min = $scope.data.min - 18;
-        $scope.data.max = $scope.data.max - 18;
-    }
-
     $scope.buildCaption = function(icon){
         $scope.$apply(function(){
-            if($scope.data.caption.length <= 4) {
+            if($scope.data.caption.length <= 2) {
             $scope.data.caption.push(icon);
             }
         });
