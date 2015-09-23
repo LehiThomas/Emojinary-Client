@@ -4,17 +4,12 @@
         <a href="#/home">
             <i class="icon ion-android-arrow-back logout"></i>
         </a>
+        <a href="#" style="float:right">
+            <i class="icon ion-navicon-round "></i>
+        </a>
     </div>
 
-    <h1 class="title">CHALLENGING</h1>
-    <h4 class="subtitle">{{challenge.data.opponent.name}}</h4>
-
-    <div class="circleImg">
-        <img ng-if="challenge.data.opponent.id == 0 || challenge.data.opponent.name == 'Random'" src="img/random.png">
-        <img ng-if="challenge.data.opponent.id != 0" ng-src="http://graph.facebook.com/{{challenge.data.opponent.id}}/picture">
-    </div>
-
-    <div class="kindaBtn button-alloyBlue profileBtn" ng-click="displayEmojis = false">
+    <div class="kindaBtn button-alloyBlue profileBtn" ng-click="displayEmojis = false" style="margin-top:3em">
         <div>
             <img class="profileImg" src="img/enter-words.png"/>
             <input class="captionContainer" ng-model="answer" placeholder="Word to Guess" type="text">
@@ -30,12 +25,19 @@
         </div>
     </div>
 
-    <button class="button button-alloyGreen block" ng-click="challenge.sendChallenge(answer, data.caption)">
-        SEND CHALLENGE
-    </button>
+    <div style=" display: inline-flex;">
+        <div class="circleImg" style="margin-right: 25px">
+            <img ng-if="challenge.data.opponent.id == 0 || challenge.data.opponent.name == 'Random'" src="img/random.png">
+            <img ng-if="challenge.data.opponent.id != 0" ng-src="http://graph.facebook.com/{{challenge.data.opponent.id}}/picture">
+        </div>
+
+        <button class="button button-balanced" ng-click="challenge.sendChallenge(answer, data.caption)" style="height: 50px; margin-top:10px">
+            SEND CHALLENGE
+        </button>
+    </div>
 
     <div class="card displayEmojis" ng-show="displayEmojis">
-        <div class="item item-divider">
+        <div class="item item-divider" style="min-height:45px; padding-left:0">
             <div class="tabs tabs-icon-only">
                 <a class="tab-item" ng-click="data.changeMinMax('people')">
                     <i class="icon ion-happy-outline"></i>
@@ -57,7 +59,7 @@
                 </a>
             </div>
         </div>
-        <div class="item item-text-wrap">
+        <div class="item item-text-wrap" style="overflow:scroll">
             <span ng-bind-html="m | emoji" ng-if="$index > data.min && $index < data.max" ng-repeat="m in data.message" select-emoji style="display:inline-block; zoom: 1.5;"></span>
         </div>
     </div>

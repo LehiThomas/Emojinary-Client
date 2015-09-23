@@ -15,6 +15,9 @@ emojinary.controller('appCtrl', function($scope, pushNotify){})
     };
 })
 
+.controller('MenuCtrl', function($scope) {
+})
+
 .controller('homeCtrl', function ($scope, user, createChallenge) {
     $scope.user = user;
     $scope.challenge = createChallenge;

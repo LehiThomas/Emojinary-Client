@@ -5,11 +5,11 @@
 // the 2nd parameter is an array of 'requires'
 var emojinary = angular.module('emojinary', ['ionic', 'ngOpenFB', 'dbaq.emoji', 'ngSanitize', 'ngCordova'])
 
-.run(function ($ionicPlatform, ngFB) {
+.run(function($ionicPlatform, ngFB) {
     ngFB.init({
         appId: '424194311096913'
     });
-    $ionicPlatform.ready(function () {
+    $ionicPlatform.ready(function() {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
         if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -21,13 +21,19 @@ var emojinary = angular.module('emojinary', ['ionic', 'ngOpenFB', 'dbaq.emoji', 
     });
 })
 
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
 
     $stateProvider.state('login', {
             url: '/',
             templateUrl: 'templates/login.htm',
             controller: 'login'
+        })
+        .state('menu', {
+            url: "/menu",
+            abstract: true,
+            templateUrl: "menu.html",
+            controller: 'MenuCtrl'
         })
         .state('home', {
             url: "/home",
@@ -53,6 +59,10 @@ var emojinary = angular.module('emojinary', ['ionic', 'ngOpenFB', 'dbaq.emoji', 
             url: "/friends",
             templateUrl: "templates/friends.htm",
             controller: "friendsCtrl"
+        })
+        .state('choose', {
+            url: "/choose",
+            templateUrl: "templates/choose.htm"
         })
 
 })

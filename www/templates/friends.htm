@@ -1,17 +1,17 @@
 <ion-pane class="friends">
 
     <div class="topBar">
-        <a href="#/home"><i class="icon ion-android-arrow-back logout"></i></a>
+        <a href="#/choose">
+            <i class="icon ion-android-arrow-back"></i>
+        </a>
+        <a href="#/" style="float:right">
+            <i class="icon ion-navicon-round "></i>
+        </a>
     </div>
-    <h1 class="title">Choose Your opponent</h1>
-    <button class="button button-alloyGreen profileBtn" ng-click="chooseOpponent('Random')">
-        <div>
-            <img src="img/random.png" class="profileImg"/>
-            <span class="name">Choose Random</span>
-        </div>
-    </button>
 
-    <button class="button button-alloyGreen profileBtn"
+    <h1 class="title">Play a Friend</h1>
+
+    <button class="button button-balanced profileBtn"
             ng-repeat="friend in friends.data"
             ng-click="chooseOpponent(friend)">
         <div>

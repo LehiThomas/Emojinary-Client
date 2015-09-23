@@ -7790,11 +7790,13 @@ div .captionContainer {
 
 .topBar {
   text-align: left;
-  font-size: 2.5em; }
+  font-size: 2.5em;
+  background-color: grey; }
 
 .topBar i {
   margin: 0.2em;
   color: white;
+  float: left;
   display: block; }
 
 .title {
@@ -7813,7 +7815,7 @@ div .captionContainer {
 
 .vs {
   color: white;
-  margin: 0.3em 0; }
+  margin: 0em 0; }
 
 .pendingChallanges {
   border-radius: 100%;
@@ -7824,17 +7826,14 @@ div .captionContainer {
   color: white;
   background-color: #E16E70;
   cursor: pointer;
-  position: absolute;
-  left: 50%;
-  margin-left: -0.9em;
-  bottom: 0.5em; }
+  margin-left: -0.9em; }
 
 .ground {
   position: absolute;
-  bottom: 0;
+  bottom: -30px;
   width: 100%;
   height: 4.5em;
-  background-image: url("../img/ground.png");
+  background-image: url("../img/new-ground.png");
   background-size: cover;
   background-position: 0;
   background-repeat: no-repeat; }
@@ -7858,3 +7857,8 @@ div .captionContainer {
 
 .emojiBox {
   background-color: balanced; }
+
+.centered {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%); }
