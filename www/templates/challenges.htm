@@ -5,14 +5,15 @@
     </div>
 
     <h1 class="title">CHALLENGES</h1>
-
-    <button class="button button-alloyBlue profileBtn" ng-repeat="challenge in data.challenges" ng-click="data.challenge.selectChallenge(challenge)">
-        <div>
-            <img ng-src="http://graph.facebook.com/{{challenge.challenger}}/picture?width=270&height=270" class="profileImg"/>
-            <span class="name">{{  data.challenge.getHours(challenge.sendDate) }}</span>
-            <span class="score"></span>
+        <div style="width: 100%; height: 80%; overflow-y: auto;">
+            <button class="kindaBtn button-alloyBlue profileBtn" ng-repeat="challenge in data.challenges" ng-click="data.challenge.selectChallenge(challenge)">
+                <div>
+                    <img ng-src="http://graph.facebook.com/{{challenge.challenger}}/picture?width=270&height=270" class="profileImg"/>
+                    <span class="name">{{  data.challenge.getHours(challenge.sendDate) }}</span>
+                    <span class="score"></span>
+                </div>
+            </button>
         </div>
-    </button>
 
 
 </ion-pane>

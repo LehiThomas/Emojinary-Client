@@ -112,13 +112,15 @@ emojinary.factory('user', function (ngFB, $http, pushNotify) {
 			alert('Must fill out an answer and emojis!');
 			return;
 		}
-	   var challenge = {
+
+	   	var challenge = {
 			challenger: user.data.id,
 			opponent: obj.data.opponent.id,
 			answer: answer,
-			emojis: emojis
+			emojis: emojis,
+			tries: 0
 		};
-
+		console.log(challenge);
 		$http.post("http://127.0.0.1:3000/challenge", challenge)
 			.success(function(data){
 			alert("Challenge sent!");
@@ -146,7 +148,6 @@ emojinary.factory('user', function (ngFB, $http, pushNotify) {
 		console.log(obj.selectedChallenge)
 		window.location = "#/challenge";
 	}
-
 
 	obj.getHours = function(postDate){
 		var pd = new Date(postDate);

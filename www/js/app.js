@@ -29,21 +29,15 @@ var emojinary = angular.module('emojinary', ['ionic', 'ngOpenFB', 'dbaq.emoji', 
             templateUrl: 'templates/login.htm',
             controller: 'login'
         })
-        .state('menu', {
-            url: "/menu",
-            abstract: true,
-            templateUrl: "menu.html",
-            controller: 'MenuCtrl'
-        })
         .state('home', {
             url: "/home",
             templateUrl: "templates/home.htm",
             controller: "homeCtrl"
         })
-        .state('createChallange', {
-            url: "/createChallange",
-            templateUrl: "templates/createChallange.htm",
-            controller: "CreateChallangeCtrl"
+        .state('createChallenge', {
+            url: "/createChallenge",
+            templateUrl: "templates/createChallenge.htm",
+            controller: "CreateChallengeCtrl"
         })
         .state('challenge', {
             url: "/challenge",

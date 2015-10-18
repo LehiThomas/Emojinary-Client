@@ -7791,7 +7791,7 @@ div .captionContainer {
 .topBar {
   text-align: left;
   font-size: 2.5em;
-  background-color: grey; }
+  height: 1.5em; }
 
 .topBar i {
   margin: 0.2em;
@@ -7855,10 +7855,15 @@ div .captionContainer {
 .guessEmoji i {
   zoom: 1.25; }
 
-.emojiBox {
-  background-color: balanced; }
-
 .centered {
   position: relative;
-  top: 50%;
+  top: 30%;
   transform: translateY(-50%); }
+
+.hint {
+  margin-top: 20px;
+  height: 95px;
+  border-radius: 100px !important; }
+
+.intro h1 {
+  color: white; }

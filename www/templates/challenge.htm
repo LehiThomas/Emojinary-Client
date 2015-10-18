@@ -1,35 +1,42 @@
 <ion-pane class="standard">
 
-        <div class="topBar">
-            <a href="#/home"><i class="icon ion-android-arrow-back logout"></i></a>
+    <div class="topBar">
+        <a href="#/challenges"><i class="icon ion-android-arrow-back logout"></i></a>
+    </div>
+
+    <h1 class="title">CHALLENGE</h1>
+
+    <div class="circleImg" style="float: left; margin-left: 30px;">
+        <img ng-src="http://graph.facebook.com/{{challenge.selectedChallenge.challenger}}/picture">
+    </div>
+
+    <div class="kindaBtn button-alloyBlue profileBtn">
+        <div>
+            <span class="captionContainer guessEmoji">
+                <span ng-repeat="cap in challenge.selectedChallenge.emojis track by $index" ng-bind-html="cap | emoji"></span>
+            </span>
         </div>
-
-        <h1 class="title">CHALLENGE</h1>
-
-        <div class="circleImg">
-            <img ng-src="http://graph.facebook.com/{{challenge.selectedChallenge.opponent}}/picture">
+    </div>
+    <div style="color:white;"><strong>Your Guess</strong></div>
+    <div class="kindaBtn button-alloyBlue profileBtn" ng-click="displayEmojis = false" style="border-radius:0; margin-top:0; width: 70%;">
+        <div>
+            <input type="text" style="letter-spacing: 3px;" class="captionContainer" placeholder="{{ fake }}" ng-model="answer">
         </div>
+    </div>
 
-        <div class="kindaBtn button-alloyBlue profileBtn" ng-click="displayEmojis = true">
-            <div>
-                <img src="img/smile.png" class="profileImg" />
-                <span class="captionContainer guessEmoji">
-                    <span ng-repeat="cap in challenge.selectedChallenge.emojis track by $index" ng-bind-html="cap | emoji"></span>
-                </span>
-            </div>
-        </div>
+    <button class="kindaBtn button-alloyGreen block" ng-click="checkAnswer(answer)">
+        SUBMIT GUESS
+    </button>
 
-        <div class="kindaBtn button-alloyBlue profileBtn" ng-click="displayEmojis = false">
-            <div>
-                <img src="img/enter-words.png" class="profileImg" />
-                <input type="text" class="captionContainer" placeholder="Word to Guess" ng-model="answer">
-            </div>
-        </div>
+    <button class="kindaBtn button-alloyGreen hint" ng-click="fake = letterClue(); isLetterDisabled = true" ng-disabled="isLetterDisabled">
+        Letter Hint
+    </button>
+    <button class="kindaBtn button-alloyGreen hint" style="margin-left:10px" ng-click="isEmojiDisabled = true" ng-disabled="isEmojiDisabled">
+        Emoji Hint
+    </button>
 
-        <button class="button button-alloyGreen block"
-                ng-click="checkAnswer(answer)">
-            SUBMIT GUESS
-        </button>
-
+    <div style="position: absolute; bottom: 0px; left:45%">
+        Coins: {{ user.data.score }}
+    </div>
 
 </ion-pane>
