@@ -104,10 +104,10 @@ emojinary.factory('user', function (ngFB, $http, pushNotify) {
 	return obj;
 })
 
-.factory('createChallenge', function (user, $http) {
+.factory('createChallenge', function (user, $ionicLoading, $http) {
 	var obj = {data: {}};
 
-	obj.sendChallenge = function(answer, emojis){
+	obj.sendChallenge = function(answer, emojis, clue){
 		if(!answer || emojis.length < 1) {
 			alert('Must fill out an answer and emojis!');
 			return;
@@ -118,12 +118,17 @@ emojinary.factory('user', function (ngFB, $http, pushNotify) {
 			opponent: obj.data.opponent.id,
 			answer: answer,
 			emojis: emojis,
-			tries: 0
+			tries: 0,
+			clue: clue
 		};
 		console.log(challenge);
 		$http.post("http://127.0.0.1:3000/challenge", challenge)
 			.success(function(data){
-			alert("Challenge sent!");
+				$ionicLoading.show({
+			      duration: 2000,
+			      noBackdrop: false,
+			      template: '<p class="item-icon-left">Sending...<ion-spinner icon="lines"/></p>'
+			    });
 			window.location = "#/home";
 		});
 

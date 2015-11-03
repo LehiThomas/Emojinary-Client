@@ -35,21 +35,25 @@ var emojinary = angular.module('emojinary', ['ionic', 'ngOpenFB', 'dbaq.emoji', 
             controller: "homeCtrl"
         })
         .state('createChallenge', {
+            cache: false,
             url: "/createChallenge",
             templateUrl: "templates/createChallenge.htm",
             controller: "CreateChallengeCtrl"
         })
         .state('challenge', {
+            cache: false,
             url: "/challenge",
             templateUrl: "templates/challenge.htm",
             controller: "challengeCtrl"
         })
         .state('challenges', {
+            cache: false,
             url: "/challenges",
             templateUrl: "templates/challenges.htm",
             controller: "challengesCtrl"
         })
         .state('friends', {
+            cache: false,
             url: "/friends",
             templateUrl: "templates/friends.htm",
             controller: "friendsCtrl"

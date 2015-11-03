@@ -1,6 +1,6 @@
 {
   "name": "emojinary",
-  "app_id": "",
+  "app_id": "3e0cbc0d",
   "gulpStartupTasks": [
     "sass",
     "watch"

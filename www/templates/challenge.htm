@@ -17,26 +17,81 @@
             </span>
         </div>
     </div>
-    <div style="color:white;"><strong>Your Guess</strong></div>
-    <div class="kindaBtn button-alloyBlue profileBtn" ng-click="displayEmojis = false" style="border-radius:0; margin-top:0; width: 70%;">
+    <div style="color:white;">
+        <strong>Your Guess</strong>
+    </div>
+    <div class="kindaBtn button-alloyBlue profileBtn block" ng-click="displayEmojis = false" style="border-radius:0; margin-top:0; width: 70%; margin:auto;">
         <div>
             <input type="text" style="letter-spacing: 3px;" class="captionContainer" placeholder="{{ fake }}" ng-model="answer">
         </div>
     </div>
 
-    <button class="kindaBtn button-alloyGreen block" ng-click="checkAnswer(answer)">
+    <button class="kindaBtn button button-assertive hint" ng-click="fake = letterClue(); isLetterDisabled = true" ng-disabled="isLetterDisabled">
+        Letter
+    </button>
+    <button class="kindaBtn button button-assertive hint" style="margin-left:10px" ng-click="isEmojiDisabled = true" ng-disabled="isEmojiDisabled">
+        Emoji
+    </button>
+
+    <button class="kindaBtn button-alloyGreen" ng-click="checkAnswer(answer)" style="margin: 20px 20px">
         SUBMIT GUESS
     </button>
 
-    <button class="kindaBtn button-alloyGreen hint" ng-click="fake = letterClue(); isLetterDisabled = true" ng-disabled="isLetterDisabled">
-        Letter Hint
-    </button>
-    <button class="kindaBtn button-alloyGreen hint" style="margin-left:10px" ng-click="isEmojiDisabled = true" ng-disabled="isEmojiDisabled">
-        Emoji Hint
-    </button>
+
 
     <div style="position: absolute; bottom: 0px; left:45%">
         Coins: {{ user.data.score }}
     </div>
+
+    <script id="modal.html" type="text/ng-template">
+            <ion-modal-view class="ion-nifty-modal">
+                <div class="ion-modal-content-custom wrong">
+                    <ion-content class="padding">
+                        <img src="../img/frown.png" alt="sad face" width="100px"/>
+                        <h1 style="margin-top: 0px; color:white;">BUMMER!</h1>
+                        <p style="font-size: 16px">
+                            Tries Remaining: {{ 3 - challenge.selectedChallenge.tries }}
+                        </p>
+                        <button class="button button-full button-positive" ng-click="modal.hide()" style="margin-top: 20px">Try Again!</button>
+                    </ion-content>
+                </div>
+            </ion-modal-view>
+    </script>
+
+    <script id="fail.html" type="text/ng-template">
+        <ion-modal-view class="ion-nifty-modal">
+            <div class="ion-modal-content-custom wrong">
+                <ion-content class="padding">
+                    <img src="../img/frown.png" alt="sad face" width="100px"/>
+                    <h1 style="margin-top: 0px; color:white;">BUMMER!</h1>
+                    <p style="font-size: 16px">
+                        Tries Remaining: 0
+                    </p>
+                    <p>
+                        The answer is "{{ challenge.selectedChallenge.answer }}"
+                    </p>
+                    <button class="button button-full button-positive" ng-click="failed(); fail.remove()" style="margin-top: 20px">Exit</button>
+                </ion-content>
+            </div>
+        </ion-modal-view>
+    </script>
+
+    <script id="success.html" type="text/ng-template">
+        <ion-modal-view class="ion-nifty-modal">
+            <div class="ion-modal-content-custom right">
+                <ion-content class="padding">
+                    <img src="../img/blueSmile.png" alt="happy face" width="100px"/>
+                    <h1 style="margin-top: 0px; color:white;">EXCELLENT JOB!</h1>
+                    <p style="font-size: 16px">
+                        Enjoy your winnings!
+                    </p>
+                    <p>
+                        Coins: {{ user.data.score + 5 }}
+                    </p>
+                        <img src="../img/close.png" ng-click="gotIt(); success.remove()" alt="close" width="100px" style="margin-top: 50px;"/>
+                </ion-content>
+            </div>
+        </ion-modal-view>
+    </script>
 
 </ion-pane>

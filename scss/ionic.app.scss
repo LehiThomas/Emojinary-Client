@@ -97,6 +97,16 @@ div .captionContainer {
 	min-width: 13em;
 }
 
+.enterEmoji{
+	margin: 1em;
+	min-width: 10em;
+}
+
+.enterClue{
+	margin: 1em;
+	max-width: 5em;
+}
+
 .profileBtn div{
 	height: 3em;
 	margin: 0.3em;
@@ -246,9 +256,62 @@ div .captionContainer {
 
 .hint {
 	margin-top: 20px;
-	height: 95px;
+	height: 55px;
+	padding: 0;
 	border-radius: 100px !important;
 }
- .intro h1{
+
+.intro h1{
 	color:white;
+}
+
+.ion-nifty-modal {
+  	width: 90%;
+  	min-height: 0 !important;
+  	height: 400px !important;
+  	top: 20%;
+  	left: 5%;
+  	right: 5%;
+  	bottom: 5%;
+  	background-color: transparent;
+  	border-radius: 10px;
+  	-webkit-box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+  	box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+	color:white;
+}
+
+.ion-nifty-modal .ion-modal-content-custom {
+	width: 100%;
+	height: 100%;
+	border-radius: 10px;
+	text-align: center;
+	color: white;
+}
+
+.wrong{background-color: $assertive;}
+.right{background-color: $positive;}
+
+.item-icon-left ion-spinner {
+  float: left;
+  margin-left: -3.2em;
+  margin-right: 1em;
+  margin-top: -0.2em;
  }
+
+.spinner svg {
+  width: 28px;
+  height: 28px;
+  stroke: #positive;
+  fill: #positive;
+}
+
+/* Fix modal backdrop for smaller devices */
+@media (max-width: 679px) {
+  .active .modal-backdrop-bg {
+    opacity: .5; }
+  .modal-backdrop-bg {
+    -webkit-transition: opacity 300ms ease-in-out;
+    transition: opacity 300ms ease-in-out;
+    background-color: $balanced;
+    opacity: 0.5; }
+}
