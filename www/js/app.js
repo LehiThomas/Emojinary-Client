@@ -60,7 +60,8 @@ var emojinary = angular.module('emojinary', ['ionic', 'ngOpenFB', 'dbaq.emoji', 
         })
         .state('choose', {
             url: "/choose",
-            templateUrl: "templates/choose.htm"
+            templateUrl: "templates/choose.htm",
+            controller: "friendsCtrl"
         })
 
 })

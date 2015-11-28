@@ -21,9 +21,13 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
     $scope.challenge = createChallenge;
 })
 
-.controller('friendsCtrl', function($scope, friends, createChallenge) {
+.controller('friendsCtrl', function($scope, friends, createChallenge, $http) {
     $scope.friends = friends;
     $scope.chooseOpponent = function(opponent) {
+        if(opponent == "Random"){
+            opponent = $http.get("http://127.0.0.1:3000/random");
+            console.log(opponent);
+        }
         createChallenge.data.opponent = opponent;
         window.location.href = "#/createChallenge";
     }
@@ -35,12 +39,17 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
 
     $scope.data.challenges = challenge.getChallenges().then(function(challenges) {
         $scope.data.challenges = challenges.data;
+        $scope.data.totalChallenges = $scope.data.challenges.length;
     });
 })
 
 .controller('challengeCtrl', function($scope, challenge, user, $http, $ionicModal) {
     $scope.challenge = challenge;
     $scope.user = user;
+    $scope.clueGiven = false;
+    $scope.isLetterDisabled = false;
+    $scope.isEmojiDisabled = false;
+
     $scope.giveUnderscores = function() {
         var underscore = challenge.selectedChallenge.answer;
         // var answer = underscore.replace(/[a-z, 0-9]/ig, '_');
@@ -55,18 +64,40 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
         return answer;
     }
     $scope.fake = $scope.giveUnderscores();
+
+    $scope.usePoints = function() {
+        $http.post("http://127.0.0.1:3000/takePoints", {
+            _id: challenge.selectedChallenge._id
+        }).success(function(data) {});
+        console.log("it worked");
+        user.data.coins -= 5;
+        return true;
+    }
+
     $scope.letterClue = function() {
         var answer = challenge.selectedChallenge.answer;
-        console.log(answer[Math.floor(Math.random() * answer.length)]);
         var clue = answer[Math.floor(Math.random() * answer.length)];
         while (clue == ' ') {
             clue = answer[Math.floor(Math.random() * answer.length)];
         }
         var checkIndex = answer.indexOf(clue);
-        return $scope.fake.substr(0, checkIndex) + clue + $scope.fake.substr(checkIndex + 1, $scope.fake.length);
+        if(user.data.coins >= 5){
+            $scope.usePoints();
+            return $scope.fake.substr(0, checkIndex) + clue + $scope.fake.substr(checkIndex + 1, $scope.fake.length);
+        } else {
+            alert("You don't have enough coins for this hint!");
+        }
     }
-    $scope.isLetterDisabled = false;
-    $scope.isEmojiDisabled = false;
+
+    $scope.giveEmojiClue = function(){
+        if(user.data.coins >= 5){
+            $scope.clueGiven = true;
+            $scope.usePoints();
+        } else {
+            alert("You don't have enough coins for this hint!");
+        }
+    }
+
     $scope.checkAnswer = function(answer) {
             if (answer.toUpperCase() === challenge.selectedChallenge.answer.toUpperCase()) {
                 $scope.success.show();
@@ -118,18 +149,13 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
                  challenger: challenge.selectedChallenge.challenger
              })
              .success(function(data) {
+                 user.data.coins += 5;
                  location.href = "#/home";
              });
       };
 })
 
 .controller('CreateChallengeCtrl', function($scope, createChallenge) {
-    if (!createChallenge.data.opponent || createChallenge.data.opponent == 'Random') {
-        createChallenge.data.opponent = {
-            name: 'Random',
-            id: 0
-        };
-    }
 
     $scope.data = {};
     $scope.data.message = allEmojis;
@@ -138,6 +164,7 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
     $scope.data.max = 196;
     $scope.data.caption = [];
     $scope.data.clue = [];
+    $scope.emojiInput = '';
     $scope.challenge = createChallenge;
 
 
@@ -182,20 +209,24 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
         $scope.data.clue.splice(index, 1);
     }
 
+    $scope.changeInput = function(input){
+        $scope.emojiInput = input;
+    }
+
     $scope.buildCaption = function(icon) {
-        $scope.$apply(function() {
-            if ($scope.data.caption.length <= 2) {
-                $scope.data.caption.push(icon);
-            }
-        });
+        console.log($scope.emojiInput);
+        if($scope.emojiInput == 'caption'){
+            $scope.$apply(function() {
+                if ($scope.data.caption.length <= 2) {
+                    $scope.data.caption.push(icon);
+                }
+            });
+        } else if ($scope.emojiInput == 'clue') {
+            $scope.$apply(function() {
+                if ($scope.data.clue.length <= 0) {
+                    $scope.data.clue.push(icon);
+                }
+            });
+        }
     }
-
-    $scope.buildClue = function(icon) {
-        $scope.$apply(function() {
-            if ($scope.data.clue.length <= 0) {
-                $scope.data.clue.push(icon);
-            }
-        });
-    }
-
 })

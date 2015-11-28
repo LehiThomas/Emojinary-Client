@@ -12,28 +12,37 @@
     <div class="kindaBtn button-alloyBlue profileBtn" ng-click="displayEmojis = false">
         <div>
             <img class="profileImg" src="img/enter-words.png"/>
-            <input class="captionContainer" ng-model="answer" placeholder="Word to Guess" type="text">
+            <input class="captionContainer" ng-model="answer" reg-ex-input reg-ex="^[a-zA-Z0-9 ]+$" placeholder="Word to Guess" type="text">
         </div>
     </div>
 
-    <div class="kindaBtn button-alloyBlue profileBtn enterEmoji" ng-click="displayEmojis = true">
-        <div>
-            <img class="profileImg" src="img/smile.png"/>
-            <span class="captionContainer guessEmoji">
-                <span ng-bind-html="cap | emoji" ng-click="data.delete($index)" ng-repeat="cap in data.caption track by $index"></span>
-            </span>
+    <div style="display: inline-flex;">
+
+        <div class="kindaBtn button-alloyBlue profileBtn enterEmoji" ng-click="displayEmojis = true">
+            <div style="display: inline-flex;">
+                <img class="profileImg" src="img/smile.png" style="float: left"/>
+                <span class="captionContainer guessEmoji"
+                ng-click="changeInput('caption')">
+                    <span ng-bind-html="cap | emoji"
+                    ng-click="data.delete($index)"
+                    ng-repeat="cap in data.caption track by $index"></span>
+                </span>
+            </div>
+        </div>
+
+        <div class="enterClue" ng-click="displayEmojis = true">
+            <div>
+                <span class="captionContainer guessEmoji" style="width: 4em !important;"
+                ng-click="changeInput('clue')">
+                    <span ng-bind-html="cap | emoji"
+                    ng-click="data.deleteClue($index)"
+                    ng-repeat="cap in data.clue track by $index"></span>
+                </span>
+            </div>
         </div>
     </div>
 
-    <div class="kindaBtn button-alloyBlue enterClue" ng-click="displayEmojis = true">
-        <div>
-            <span class="captionContainer guessEmoji">
-                <span ng-bind-html="cap | emoji" ng-click="data.deleteClue($index)" ng-repeat="cap in data.clue track by $index"></span>
-            </span>
-        </div>
-    </div>
-
-    <div style=" display: inline-flex;">
+    <div style="display: inline-flex;">
         <div class="circleImg" style="margin-right: 25px">
             <img ng-if="challenge.data.opponent.id == 0 || challenge.data.opponent.name == 'Random'" src="img/random.png">
             <img ng-if="challenge.data.opponent.id != 0" ng-src="http://graph.facebook.com/{{challenge.data.opponent.id}}/picture">
@@ -71,7 +80,11 @@
         </div>
         <ion-scroll direction="y" style="height: 275px; background-color: #02d87b; margin: 0 10px;">
             <div style="padding: 15px 0px;">
-                <span ng-bind-html="m | emoji" ng-if="$index > data.min && $index < data.max" ng-repeat="m in data.message" select-emoji style="display:inline-block; zoom: 1.5;"></span>
+                <span ng-bind-html="m | emoji"
+                ng-if="$index > data.min && $index < data.max"
+                ng-repeat="m in data.message"
+                select-emoji
+                style="display:inline-block; zoom: 1.5;"></span>
             </div>
         </ion-scroll>
     </div>

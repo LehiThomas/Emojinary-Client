@@ -14,6 +14,7 @@
         <div>
             <span class="captionContainer guessEmoji">
                 <span ng-repeat="cap in challenge.selectedChallenge.emojis track by $index" ng-bind-html="cap | emoji"></span>
+                <span ng-repeat="cap in challenge.selectedChallenge.clue track by $index" ng-bind-html="cap | emoji" ng-show="clueGiven"></span>
             </span>
         </div>
     </div>
@@ -29,7 +30,7 @@
     <button class="kindaBtn button button-assertive hint" ng-click="fake = letterClue(); isLetterDisabled = true" ng-disabled="isLetterDisabled">
         Letter
     </button>
-    <button class="kindaBtn button button-assertive hint" style="margin-left:10px" ng-click="isEmojiDisabled = true" ng-disabled="isEmojiDisabled">
+    <button class="kindaBtn button button-assertive hint" style="margin-left:10px" ng-click="giveEmojiClue(); isEmojiDisabled = true" ng-disabled="isEmojiDisabled">
         Emoji
     </button>
 
@@ -37,10 +38,8 @@
         SUBMIT GUESS
     </button>
 
-
-
     <div style="position: absolute; bottom: 0px; left:45%">
-        Coins: {{ user.data.score }}
+        Coins: {{ user.data.coins }}
     </div>
 
     <script id="modal.html" type="text/ng-template">
@@ -86,7 +85,7 @@
                         Enjoy your winnings!
                     </p>
                     <p>
-                        Coins: {{ user.data.score + 5 }}
+                        Coins: {{ user.data.coins + 5 }}
                     </p>
                         <img src="../img/close.png" ng-click="gotIt(); success.remove()" alt="close" width="100px" style="margin-top: 50px;"/>
                 </ion-content>
