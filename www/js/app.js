@@ -5,11 +5,11 @@
 // the 2nd parameter is an array of 'requires'
 var emojinary = angular.module('emojinary', ['ionic', 'ngOpenFB', 'dbaq.emoji', 'ngSanitize', 'ngCordova'])
 
-.run(function ($ionicPlatform, ngFB) {
+.run(function($ionicPlatform, ngFB) {
     ngFB.init({
         appId: '424194311096913'
     });
-    $ionicPlatform.ready(function () {
+    $ionicPlatform.ready(function() {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
         if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -21,7 +21,7 @@ var emojinary = angular.module('emojinary', ['ionic', 'ngOpenFB', 'dbaq.emoji', 
     });
 })
 
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
 
     $stateProvider.state('login', {
@@ -30,28 +30,38 @@ var emojinary = angular.module('emojinary', ['ionic', 'ngOpenFB', 'dbaq.emoji', 
             controller: 'login'
         })
         .state('home', {
+            cache: false,
             url: "/home",
             templateUrl: "templates/home.htm",
             controller: "homeCtrl"
         })
-        .state('createChallange', {
-            url: "/createChallange",
-            templateUrl: "templates/createChallange.htm",
-            controller: "CreateChallangeCtrl"
+        .state('createChallenge', {
+            cache: false,
+            url: "/createChallenge",
+            templateUrl: "templates/createChallenge.htm",
+            controller: "CreateChallengeCtrl"
         })
         .state('challenge', {
+            cache: false,
             url: "/challenge",
             templateUrl: "templates/challenge.htm",
             controller: "challengeCtrl"
         })
         .state('challenges', {
+            cache: false,
             url: "/challenges",
             templateUrl: "templates/challenges.htm",
             controller: "challengesCtrl"
         })
         .state('friends', {
+            cache: false,
             url: "/friends",
             templateUrl: "templates/friends.htm",
+            controller: "friendsCtrl"
+        })
+        .state('choose', {
+            url: "/choose",
+            templateUrl: "templates/choose.htm",
             controller: "friendsCtrl"
         })
 

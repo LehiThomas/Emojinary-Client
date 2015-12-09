@@ -1,38 +1,34 @@
 <ion-pane class="standard">
-    <div class="topBar">
-        <a href="#/"><i class="icon ion-log-out logout"></i></a>
+
+    <div class="topBar" >
+        <a href="#/" style="float:left">
+            <i class="icon ion-log-out logout"></i>
+        </a>
+        <a href="#/" style="float:right">
+            <i class="icon ion-navicon-round "></i>
+        </a>
     </div>
-    <h1 class="title">CHALLENGE</h1>
-    
-    <p class="instructions">Select from your list of friends or choose random and play against anyone and everyone.</p>
-    <button class="button button-alloyBlue profileBtn">
-        <div>
-            <img ng-src="http://graph.facebook.com/{{user.data.id}}/picture?width=270&height=270" class="profileImg"/>
-            <span class="name">{{user.data.name}}</span>
-            <span class="score">{{user.data.score}}</span>
-        </div>    
-    </button>
-    <h2 class="vs">VS</h2>
-    <a href="#/friends">
-        <button class="button button-alloyGreen profileBtn">
-            <div ng-if="!challenge.data.oppenent">
-                <img src="img/random.png" class="profileImg"/>
-            </div>
-            <div ng-if="challenge.data.oppenent">
-                <img ng-src="http://graph.facebook.com/{{challenge.data.oppenent.id}}/picture?width=270&height=270"
-                     class="profileImg"/>
-                <span class="name">{{challenge.data.oppenent.name}}</span>
-                <span class="score">{{challenge.data.oppenent.score}}</span>
-            </div> 
-        </button>
-    </a>
-    <a href="#/createChallange">
-        <button class="button button-alloyRed block">challenge</button>
-    </a>
-    <a href="#/challenges">
-        <div class="ground">
-            <div class="pendingChallanges">3</div>    
-        </div>
-    </a>
-    
+    <div class="intro">
+        <h1>Welcome, <br />{{ user.data.name }}</h1>
+    </div>
+
+    <div class="centered">
+        <p class="instructions">Start a new game or select one of your challenges.</p>
+        <a href="#/choose">
+            <button class="button button-positive profileBtn">
+                <span>New Game</span>
+            </button>
+        </a>
+
+        <h2 class="vs">OR</h2>
+
+        <a href="#/challenges" ng-controller="challengesCtrl">
+            <button class="button button-balanced profileBtn">
+                <span>Challenges: {{ data.totalChallenges }}</span>
+            </button>
+        </a>
+    </div>
+
+    <div class="ground"></div>
+
 </ion-pane>
