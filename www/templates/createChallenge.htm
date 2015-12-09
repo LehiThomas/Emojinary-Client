@@ -78,7 +78,7 @@
                 </div>
             </div>
         </div>
-        <ion-scroll direction="y" style="height: 275px; background-color: #02d87b; margin: 0 10px;">
+        <div style="overflow-y:auto; height: 275px; background-color: #02d87b; margin: 0 10px;">
             <div style="padding: 15px 0px;">
                 <span ng-bind-html="m | emoji"
                 ng-if="$index > data.min && $index < data.max"
@@ -86,7 +86,7 @@
                 select-emoji
                 style="display:inline-block; zoom: 1.5;"></span>
             </div>
-        </ion-scroll>
+        </div>
     </div>
 
 </ion-content>

@@ -30,6 +30,7 @@ var emojinary = angular.module('emojinary', ['ionic', 'ngOpenFB', 'dbaq.emoji', 
             controller: 'login'
         })
         .state('home', {
+            cache: false,
             url: "/home",
             templateUrl: "templates/home.htm",
             controller: "homeCtrl"

@@ -21,12 +21,19 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
     $scope.challenge = createChallenge;
 })
 
-.controller('friendsCtrl', function($scope, friends, createChallenge, $http) {
+.controller('friendsCtrl', function($scope, friends, createChallenge, $http, user) {
     $scope.friends = friends;
     $scope.chooseOpponent = function(opponent) {
         if(opponent == "Random"){
-            opponent = $http.get("http://127.0.0.1:3000/random");
-            console.log(opponent);
+            var me = user.data.id;
+            $http.get("http://127.0.0.1:3000/random?uid="+me).then(function(res){
+                var opponents = res.data;
+                var size = opponents.length - 1;
+            	var randomIndex = Math.floor( Math.random() * size );
+                opponent = opponents[randomIndex];
+                createChallenge.data.opponent = opponent;
+                window.location.href = "#/createChallenge";
+            });
         }
         createChallenge.data.opponent = opponent;
         window.location.href = "#/createChallenge";
@@ -144,14 +151,14 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
      });
      $scope.gotIt = function() {
          $http.post("http://127.0.0.1:3000/answer", {
-                 _id: challenge.selectedChallenge._id,
-                 opponent: challenge.selectedChallenge.opponent,
-                 challenger: challenge.selectedChallenge.challenger
-             })
-             .success(function(data) {
-                 user.data.coins += 5;
-                 location.href = "#/home";
-             });
+                _id: challenge.selectedChallenge._id,
+                opponent: challenge.selectedChallenge.opponent,
+                challenger: challenge.selectedChallenge.challenger
+            })
+            .success(function(data) {
+                location.href = "#/home";
+                user.data.coins += 5;
+            });
       };
 })
 
