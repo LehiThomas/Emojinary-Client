@@ -31,7 +31,7 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
                 var size = opponents.length - 1;
             	var randomIndex = Math.floor( Math.random() * size );
                 opponent = opponents[randomIndex];
-                createChallenge.data.opponent = opponent;
+                createChallenge .data.opponent =opponent;
                 window.location.href = "#/createChallenge";
             });
         }
@@ -50,27 +50,38 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
     });
 })
 
-.controller('challengeCtrl', function($scope, challenge, user, $http, $ionicModal) {
+.controller('challengeCtrl', function($scope, challenge, user, $http, $ionicModal, $sce, $sanitize) {
     $scope.challenge = challenge;
-    $scope.user = user;
+    $scope.isLetterDisabled = false;    
     $scope.clueGiven = false;
-    $scope.isLetterDisabled = false;
-    $scope.isEmojiDisabled = false;
+    $scope.guess = [];
+    
+
+    if(challenge.selectedChallenge.clue.length > 0){
+        $scope.isEmojiDisabled = false;
+    } else {        
+        $scope.isEmojiDisabled = true;
+    }
 
     $scope.giveUnderscores = function() {
-        var underscore = challenge.selectedChallenge.answer;
+        var answer = challenge.selectedChallenge.answer;
         // var answer = underscore.replace(/[a-z, 0-9]/ig, '_');
-        var answer = '';
-        for (var i = 0; i < underscore.length; i++) {
-            if (underscore[i] != ' ') {
-                answer += '_';
+        var underscore = '';
+        for (var i = 0; i < answer.length; i++) {
+            if(answer[i+1] == ' '){
+              underscore += '<input type="text" style="margin-right:1em;" maxlength="1" ng-model="guess['+ i +']" class="underscore">';  
+            } else if (answer[i] != ' ') {
+                underscore += '<input type="text" maxlength="1" ng-model="guess['+ i +']" class="underscore">';
             } else {
-                answer += underscore[i];
+                $scope.user = user;    
+                underscore += '<span></span>';
             }
         }
-        return answer;
+
+        return underscore;
     }
-    $scope.fake = $scope.giveUnderscores();
+
+    $scope.boxes = $sce.trustAsHtml($scope.giveUnderscores());
 
     $scope.usePoints = function() {
         $http.post("http://127.0.0.1:3000/takePoints", {
@@ -90,7 +101,7 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
         var checkIndex = answer.indexOf(clue);
         if(user.data.coins >= 5){
             $scope.usePoints();
-            return $scope.fake.substr(0, checkIndex) + clue + $scope.fake.substr(checkIndex + 1, $scope.fake.length);
+            return $scope.boxes.substr(0, checkIndex) + clue + $scope.boxes.substr(checkIndex + 1, $scope.boxes.length);
         } else {
             alert("You don't have enough coins for this hint!");
         }
@@ -99,26 +110,29 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
     $scope.giveEmojiClue = function(){
         if(user.data.coins >= 5){
             $scope.clueGiven = true;
+            console.log("Still lost points!");
             $scope.usePoints();
         } else {
             alert("You don't have enough coins for this hint!");
         }
     }
 
-    $scope.checkAnswer = function(answer) {
-            if (answer.toUpperCase() === challenge.selectedChallenge.answer.toUpperCase()) {
-                $scope.success.show();
-            } else {
-                $http.post("http://127.0.0.1:3000/try", {
-                    _id: challenge.selectedChallenge._id
-                }).success(function(data) {});
-                challenge.selectedChallenge.tries += 1;
-                if (challenge.selectedChallenge.tries >= 3) {
-                    $scope.fail.show()
-                } else {
-                    $scope.modal.show();
-                }
-            }
+    $scope.checkAnswer = function(guess) {
+        var answer = challenge.selectedChallenge.answer;
+        console.log("Your guess: " + guess.toString());
+            // if (guess.toUpperCase() === answer.toUpperCase()) {
+            //     $scope.success.show();
+            // } else {
+            //     $http.post("http://127.0.0.1:3000/try", {
+            //         _id: challenge.selectedChallenge._id
+            //     }).success(function(data) {});
+            //     challenge.selectedChallenge.tries += 1;
+            //     if (challenge.selectedChallenge.tries >= 3) {
+            //         $scope.fail.show()
+            //     } else {
+            //         $scope.modal.show();
+            //     }
+            // }
         }
         // Load the modal from the given template URL
     $ionicModal.fromTemplateUrl('modal.html', {

@@ -42,7 +42,7 @@ div .captionContainer {
 	text-align: center;
 	display: inline-block;
 	height: 2.5em;
-	width: 12em;
+	width: 13em;
 	vertical-align: top;
 	margin-top: 0.6em;
 	background-color: transparent;
@@ -102,6 +102,10 @@ div .captionContainer {
 	width: 15em;
 }
 
+.enterEmoji:active {
+	box-shadow: 10px 10px 5px #888888;
+}
+
 .guessEmoji {
 	width: 10em !important;
 }
@@ -126,9 +130,13 @@ div .captionContainer {
 	box-shadow: 5px 9px 1px -3px $positive-shadow;
 }
 
+.enterClue:active {
+	box-shadow: 10px 10px 5px #888888;
+}
+
 .profileBtn div{
 	height: 3em;
-	margin: 0.3em;
+	margin: 0.3em 0;
 }
 
 .profileBtn .profileImg{
@@ -149,6 +157,17 @@ div .captionContainer {
 	vertical-align: top;
 	display: inline-block;
 	font-size: 2em;
+}
+
+.underscore {
+	width: .7em;
+	height: 1.5em !important;
+    background: $balanced-shadow;
+    float: left;
+    margin: .3em;
+    padding: 0;
+    padding-left: 1px !important;
+	box-shadow: 0px 0px 0px 3px $positive-shadow;
 }
 
 /*************************

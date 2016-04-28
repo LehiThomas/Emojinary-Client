@@ -12,13 +12,14 @@
     <div class="kindaBtn button-alloyBlue profileBtn" ng-click="displayEmojis = false">
         <div>
             <img class="profileImg" src="img/enter-words.png"/>
-            <input class="captionContainer" ng-model="answer" reg-ex-input reg-ex="^[a-zA-Z0-9 ]+$" placeholder="Word to Guess" type="text">
+            <input class="captionContainer" maxlength="29" ng-model="answer" reg-ex-input reg-ex="^[a-zA-Z0-9 ]+$" placeholder="Word to Guess" type="text">
         </div>
     </div>
 
     <div style="display: inline-flex;">
 
-        <div class="kindaBtn button-alloyBlue profileBtn enterEmoji" ng-click="displayEmojis = true">
+        <div class="kindaBtn button-alloyBlue profileBtn enterEmoji" 
+                ng-click="displayEmojis = true" style="padding: 0;">
             <div style="display: inline-flex;">
                 <img class="profileImg" src="img/smile.png" style="float: left"/>
                 <span class="captionContainer guessEmoji"
