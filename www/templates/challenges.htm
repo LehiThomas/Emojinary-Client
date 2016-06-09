@@ -1,4 +1,8 @@
-<ion-pane class="standard">
+<ion-content class="standard">
+    <ion-refresher
+        pulling-text="Pull to refresh..."
+        on-refresh="doRefresh()">
+    </ion-refresher>
 
     <div class="topBar">
         <a href="#/home"><i class="icon ion-android-arrow-back logout"></i></a>
@@ -16,4 +20,4 @@
         </div>
 
 
-</ion-pane>
+</ion-content>

@@ -29,6 +29,14 @@
         </a>
     </div>
 
-    <div class="ground"></div>
+    <div class="ground">
+        <div style="position: absolute; bottom: 60px; left:35%">
+            <a href="#/buyCoins" ng-controller="buyCoinsCtrl">
+                <span style="font-size: 35px;">{{ user.data.coins }}</span>
+                <img style="width:4em; position: relative; bottom: -15px;
+                left: 5px;" src="img/coins.png" />
+            </a>
+        </div>
+    </div>
 
 </ion-pane>

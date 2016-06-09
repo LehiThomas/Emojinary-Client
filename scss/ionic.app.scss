@@ -134,6 +134,24 @@ div .captionContainer {
 	box-shadow: 10px 10px 5px #888888;
 }
 
+.coinPrices{
+	margin-top: 30px;
+	background-color: $balanced;
+	border-radius: 50px;
+	box-shadow: 5px 9px 1px -3px $balanced-shadow;
+	display: inline-block;
+	padding: 5px 50px;
+}
+
+.coinPrices span {
+	position: relative;
+    bottom: 15px;
+}
+
+a {
+    color: black;
+}
+
 .profileBtn div{
 	height: 3em;
 	margin: 0.3em 0;
@@ -160,7 +178,7 @@ div .captionContainer {
 }
 
 .underscore {
-	width: .7em;
+	width: 1em;
 	height: 1.5em !important;
     background: $balanced-shadow;
     float: left;
@@ -168,6 +186,15 @@ div .captionContainer {
     padding: 0;
     padding-left: 1px !important;
 	box-shadow: 0px 0px 0px 3px $positive-shadow;
+}
+
+.gap{
+	margin-right: .5em;
+	float: left;
+}
+
+input[readonly]:not(.cloned-text-input){
+	background-color: $positive-shadow;
 }
 
 /*************************
@@ -280,6 +307,26 @@ div .captionContainer {
 	border-radius: 100%;
 	height: 4em;
 	margin: 0.5em auto;
+}
+
+.guessBox {
+	border-radius: 0;
+    margin-top: 0;
+    width: 90%;
+    margin: auto;
+    border-color: #00aeef;
+    background-color: #00aeef;
+    color: #fff;
+    box-shadow: 5px 9px 1px -3px #0090c5;
+    padding: 5px 12px;
+    font-size: 16px;
+    cursor: pointer;
+    min-height: 3em;
+
+}
+
+.guessBox span {
+	display: inline-block;
 }
 
 .guessEmoji i{

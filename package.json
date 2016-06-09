@@ -21,7 +21,15 @@
     "org.apache.cordova.device",
     "org.apache.cordova.console",
     "com.ionic.keyboard",
-    "org.apache.cordova.inappbrowser"
+    "org.apache.cordova.inappbrowser",
+    {
+      "variables": {
+        "SENDER_ID": "385235178550"
+      },
+      "locator": "phonegap-plugin-push",
+      "id": "phonegap-plugin-push"
+    },
+    "cordova-plugin-inappbrowser"
   ],
   "cordovaPlatforms": []
 }

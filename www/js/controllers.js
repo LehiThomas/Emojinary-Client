@@ -11,6 +11,9 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
                 } else {
                     alert('Facebook login failed');
                 }
+            },
+            function(err){
+                console.log(err);
             });
     };
 })
@@ -21,12 +24,16 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
     $scope.challenge = createChallenge;
 })
 
+.controller('buyCoinsCtrl', function($scope, user) {
+    $scope.user = user;
+})
+
 .controller('friendsCtrl', function($scope, friends, createChallenge, $http, user) {
     $scope.friends = friends;
     $scope.chooseOpponent = function(opponent) {
         if(opponent == "Random"){
             var me = user.data.id;
-            $http.get("http://127.0.0.1:3000/random?uid="+me).then(function(res){
+            $http.get("http://192.168.1.67:3000/random?uid="+me).then(function(res){
                 var opponents = res.data;
                 var size = opponents.length - 1;
             	var randomIndex = Math.floor( Math.random() * size );
@@ -48,6 +55,13 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
         $scope.data.challenges = challenges.data;
         $scope.data.totalChallenges = $scope.data.challenges.length;
     });
+
+    $scope.doRefresh = function() {
+        // Do Something
+        console.log("It’s working!");
+        // Stop the ion-refresher from spinning
+        $scope.$broadcast('scroll.refreshComplete');
+    };
 })
 
 .controller('challengeCtrl', function($scope, challenge, user, $http, $ionicModal, $sce, $sanitize) {
@@ -55,7 +69,7 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
     $scope.isLetterDisabled = false;    
     $scope.clueGiven = false;
     $scope.guess = [];
-    
+    $scope.coins = user.data.coins;
 
     if(challenge.selectedChallenge.clue.length > 0){
         $scope.isEmojiDisabled = false;
@@ -81,15 +95,15 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
         return underscore;
     }
 
-    $scope.boxes = $sce.trustAsHtml($scope.giveUnderscores());
+    $scope.boxes = challenge.selectedChallenge.answer;
 
     $scope.usePoints = function() {
-        $http.post("http://127.0.0.1:3000/takePoints", {
-            _id: challenge.selectedChallenge._id
-        }).success(function(data) {});
-        console.log("it worked");
-        user.data.coins -= 5;
-        return true;
+        $http.post("http://192.168.1.67:3000/takePoints", {
+            id: user.data.id
+        }).success(function(data) {
+            $scope.coins -= 5;
+            user.data.coins -= 5;
+        });  
     }
 
     $scope.letterClue = function() {
@@ -98,19 +112,20 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
         while (clue == ' ') {
             clue = answer[Math.floor(Math.random() * answer.length)];
         }
-        var checkIndex = answer.indexOf(clue);
-        if(user.data.coins >= 5){
+        var getIndex = answer.indexOf(clue);
+        var id = "box" + getIndex;
+        if($scope.coins >= 5){
             $scope.usePoints();
-            return $scope.boxes.substr(0, checkIndex) + clue + $scope.boxes.substr(checkIndex + 1, $scope.boxes.length);
+            $scope.guess[getIndex] = clue;
+            document.getElementById(id).readOnly = true;
         } else {
             alert("You don't have enough coins for this hint!");
         }
     }
 
     $scope.giveEmojiClue = function(){
-        if(user.data.coins >= 5){
+        if($scope.coins >= 5){
             $scope.clueGiven = true;
-            console.log("Still lost points!");
             $scope.usePoints();
         } else {
             alert("You don't have enough coins for this hint!");
@@ -119,21 +134,45 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
 
     $scope.checkAnswer = function(guess) {
         var answer = challenge.selectedChallenge.answer;
-        console.log("Your guess: " + guess.toString());
-            // if (guess.toUpperCase() === answer.toUpperCase()) {
-            //     $scope.success.show();
-            // } else {
-            //     $http.post("http://127.0.0.1:3000/try", {
-            //         _id: challenge.selectedChallenge._id
-            //     }).success(function(data) {});
-            //     challenge.selectedChallenge.tries += 1;
-            //     if (challenge.selectedChallenge.tries >= 3) {
-            //         $scope.fail.show()
-            //     } else {
-            //         $scope.modal.show();
-            //     }
-            // }
+        answer = answer.replace(/\s+/g, '');
+        var usersGuess = guess.join("");
+        
+        if (usersGuess.toUpperCase() === answer.toUpperCase()) {
+            $scope.coins += 5;
+            user.data.coins = $scope.coins;
+            $scope.success.show();
+        } else {
+            $http.post("http://192.168.1.67:3000/try", {
+                _id: challenge.selectedChallenge._id
+            }).success(function(data) {});
+            challenge.selectedChallenge.tries += 1;
+            if (challenge.selectedChallenge.tries >= 3) {
+                $scope.fail.show()
+            } else {
+                $scope.modal.show();
+            }
         }
+    }
+
+    $scope.autoTab = function(index) {
+        var current = '#box' + (index);
+        var next = '#box' + (index + 1);
+
+        current = document.querySelector(current);
+        next = document.querySelector(next);
+
+        if(next != null){
+            if(next.tagName != 'INPUT' || next.readOnly){
+                next = '#box' + (index + 2);
+                next = document.querySelector(next);
+                }
+
+            if(current.value.length > 0){
+                next.focus()
+            }   
+        }    
+    }
+
         // Load the modal from the given template URL
     $ionicModal.fromTemplateUrl('modal.html', {
         scope: $scope,
@@ -150,30 +189,30 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
         $scope.fail = modal;
     });
     $scope.failed = function() {
-        $http.post("http://127.0.0.1:3000/fail", {
+        $http.post("http://192.168.1.67:3000/fail", {
             _id: challenge.selectedChallenge._id
         }).success(function(data) {
             window.location = "#/home";
         });
-     };
+    };
+
      // Load the modal from the given template URL
-     $ionicModal.fromTemplateUrl('success.html', {
-         scope: $scope,
-         animation: 'jelly'
-     }).then(function(modal) {
-         $scope.success = modal;
-     });
-     $scope.gotIt = function() {
-         $http.post("http://127.0.0.1:3000/answer", {
-                _id: challenge.selectedChallenge._id,
-                opponent: challenge.selectedChallenge.opponent,
-                challenger: challenge.selectedChallenge.challenger
-            })
-            .success(function(data) {
-                location.href = "#/home";
-                user.data.coins += 5;
-            });
-      };
+    $ionicModal.fromTemplateUrl('success.html', {
+        scope: $scope,
+        animation: 'jelly'
+    }).then(function(modal) {
+        $scope.success = modal;
+    });
+    $scope.gotIt = function() {
+        $http.post("http://192.168.1.67:3000/answer", {
+            _id: challenge.selectedChallenge._id,
+            opponent: challenge.selectedChallenge.opponent,
+            challenger: challenge.selectedChallenge.challenger
+        })
+        .success(function(data) {
+            location.href = "#/home";
+        });
+    };
 })
 
 .controller('CreateChallengeCtrl', function($scope, createChallenge) {

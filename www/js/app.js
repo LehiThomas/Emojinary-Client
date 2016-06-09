@@ -3,7 +3,8 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var emojinary = angular.module('emojinary', ['ionic', 'ngOpenFB', 'dbaq.emoji', 'ngSanitize', 'ngCordova'])
+var emojinary = angular.module('emojinary', ['ionic','ionic.service.core', 'ngOpenFB', 
+    'dbaq.emoji', 'ngSanitize', 'ngCordova', 'ionic.service.core', 'ionic.service.push'])
 
 .run(function($ionicPlatform, ngFB) {
     ngFB.init({
@@ -18,6 +19,13 @@ var emojinary = angular.module('emojinary', ['ionic', 'ngOpenFB', 'dbaq.emoji', 
         if (window.StatusBar) {
             StatusBar.styleDefault();
         }
+        // var push = new Ionic.Push({
+        //     "debug": true
+        // });
+
+        // push.register(function(token) {
+        //     console.log("Device token:",token.token);
+        // });
     });
 })
 
@@ -63,6 +71,11 @@ var emojinary = angular.module('emojinary', ['ionic', 'ngOpenFB', 'dbaq.emoji', 
             url: "/choose",
             templateUrl: "templates/choose.htm",
             controller: "friendsCtrl"
+        })
+        .state('buyCoins', {
+            url: "/buyCoins",
+            templateUrl: "templates/buyCoins.htm",
+            controller: "buyCoinsCtrl"
         })
 
 })

@@ -18,16 +18,24 @@
             </span>
         </div>
     </div>
+
+    <script type="text/javascript">
+
+    </script>
+
     <div style="color:white;">
         <strong>Your Guess</strong>
     </div>
-    <div class="kindaBtn button-alloyBlue profileBtn block" ng-click="displayEmojis = false" style="border-radius:0; margin-top:0; width: 90%; margin:auto;">
-        <div ng-bind-html="boxes">
-            <!-- <input type="text" style="letter-spacing: 3px;" class="captionContainer" placeholder="{{ boxes }}" ng-model="answer"> -->
+    <div class="guessBox" ng-click="displayEmojis = false" >
+        <div>
+            <span ng-repeat="box in boxes track by $index" >
+                <input type="text" ng-if="boxes[$index] != ' '" ng-keyup="autoTab($index)" maxlength="1" ng-model="guess[$index]" id="box{{$index}}" class="underscore" tabindex="{{$index + 1}}">
+                <span ng-if="boxes[$index] == ' '" id="box{{$index}}" class="gap">&nbsp;</span>
+            </span>
         </div>
     </div>
 
-    <button class="kindaBtn button button-assertive hint" ng-click="boxes = letterClue(); isLetterDisabled = true" ng-disabled="isLetterDisabled">
+    <button class="kindaBtn button button-assertive hint" ng-click="letterClue(); isLetterDisabled = true" ng-disabled="isLetterDisabled">
         Letter
     </button>
     <button class="kindaBtn button button-assertive hint" style="margin-left:10px" ng-click="giveEmojiClue(); isEmojiDisabled = true" ng-disabled="isEmojiDisabled">
@@ -39,7 +47,7 @@
     </button>
 
     <div style="position: absolute; bottom: 15px; left:35%">
-        <span style="font-size: 35px;">{{ user.data.coins + 5 }}</span>
+        <span style="font-size: 35px;">{{ coins }}</span>
         <img style="width:4em; position: relative; bottom: -15px;
         left: 5px;" src="img/coins.png" />
         
@@ -89,9 +97,9 @@
                     </p>
                     <p>
                         <img style="width:2em;" src="img/coins.png" />
-                        : {{ user.data.coins + 5 }}
+                         <span style="font-size: 2em">+ 5</span>
                     </p>
-                        <img src="../img/close.png" ng-click="gotIt(); success.remove()" alt="close" width="100px" style="margin-top: 50px;"/>
+                        <img src="../img/close.png" ng-click="gotIt(); success.remove()" alt="close" width="100px" style="margin-top: 40px;"/>
                 </ion-content>
             </div>
         </ion-modal-view>
