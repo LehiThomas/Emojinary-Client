@@ -9305,7 +9305,7 @@ input[readonly]:not(.cloned-text-input) {
   display: inline-block; }
 
 .guessEmoji i {
-  zoom: 1.25; }
+  zoom: 1.75; }
 
 .centered {
   position: relative;

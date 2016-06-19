@@ -33,7 +33,7 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
     $scope.chooseOpponent = function(opponent) {
         if(opponent == "Random"){
             var me = user.data.id;
-            $http.get("http://192.168.1.67:3000/random?uid="+me).then(function(res){
+            $http.get("http://a11oy.com:3010/random?uid="+me).then(function(res){
                 var opponents = res.data;
                 var size = opponents.length - 1;
             	var randomIndex = Math.floor( Math.random() * size );
@@ -98,7 +98,7 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
     $scope.boxes = challenge.selectedChallenge.answer;
 
     $scope.usePoints = function() {
-        $http.post("http://192.168.1.67:3000/takePoints", {
+        $http.post("http://a11oy.com:3010/takePoints", {
             id: user.data.id
         }).success(function(data) {
             $scope.coins -= 5;
@@ -142,7 +142,7 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
             user.data.coins = $scope.coins;
             $scope.success.show();
         } else {
-            $http.post("http://192.168.1.67:3000/try", {
+            $http.post("http://a11oy.com:3010/try", {
                 _id: challenge.selectedChallenge._id
             }).success(function(data) {});
             challenge.selectedChallenge.tries += 1;
@@ -189,7 +189,7 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
         $scope.fail = modal;
     });
     $scope.failed = function() {
-        $http.post("http://192.168.1.67:3000/fail", {
+        $http.post("http://a11oy.com:3010/fail", {
             _id: challenge.selectedChallenge._id
         }).success(function(data) {
             window.location = "#/home";
@@ -204,7 +204,7 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
         $scope.success = modal;
     });
     $scope.gotIt = function() {
-        $http.post("http://192.168.1.67:3000/answer", {
+        $http.post("http://a11oy.com:3010/answer", {
             _id: challenge.selectedChallenge._id,
             opponent: challenge.selectedChallenge.opponent,
             challenger: challenge.selectedChallenge.challenger
