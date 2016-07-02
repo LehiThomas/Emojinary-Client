@@ -1,4 +1,4 @@
-emojinary.controller('appCtrl', function($scope, pushNotify) {})
+emojinary.controller('appCtrl', function($scope) {})
 
 .controller('login', function($scope, $ionicModal, $timeout, ngFB, $location, user) {
     $scope.fbLogin = function() {
@@ -12,7 +12,7 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
                     alert('Facebook login failed');
                 }
             },
-            function(err){
+            function(err) {
                 console.log(err);
             });
     };
@@ -31,14 +31,14 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
 .controller('friendsCtrl', function($scope, friends, createChallenge, $http, user) {
     $scope.friends = friends;
     $scope.chooseOpponent = function(opponent) {
-        if(opponent == "Random"){
+        if (opponent == "Random") {
             var me = user.data.id;
-            $http.get("http://a11oy.com:3010/random?uid="+me).then(function(res){
+            $http.get("http://192.168.1.67:3000/random?uid=" + me).then(function(res) {
                 var opponents = res.data;
                 var size = opponents.length - 1;
-            	var randomIndex = Math.floor( Math.random() * size );
+                var randomIndex = Math.floor(Math.random() * size);
                 opponent = opponents[randomIndex];
-                createChallenge .data.opponent =opponent;
+                createChallenge.data.opponent = opponent;
                 window.location.href = "#/createChallenge";
             });
         }
@@ -58,7 +58,10 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
 
     $scope.doRefresh = function() {
         // Do Something
-        console.log("It’s working!");
+        $scope.data.challenges = challenge.getChallenges().then(function(challenges) {
+            $scope.data.challenges = challenges.data;
+            $scope.data.totalChallenges = $scope.data.challenges.length;
+        });
         // Stop the ion-refresher from spinning
         $scope.$broadcast('scroll.refreshComplete');
     };
@@ -66,14 +69,14 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
 
 .controller('challengeCtrl', function($scope, challenge, user, $http, $ionicModal, $sce, $sanitize) {
     $scope.challenge = challenge;
-    $scope.isLetterDisabled = false;    
+    $scope.isLetterDisabled = false;
     $scope.clueGiven = false;
     $scope.guess = [];
     $scope.coins = user.data.coins;
 
-    if(challenge.selectedChallenge.clue.length > 0){
+    if (challenge.selectedChallenge.clue.length > 0) {
         $scope.isEmojiDisabled = false;
-    } else {        
+    } else {
         $scope.isEmojiDisabled = true;
     }
 
@@ -82,12 +85,12 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
         // var answer = underscore.replace(/[a-z, 0-9]/ig, '_');
         var underscore = '';
         for (var i = 0; i < answer.length; i++) {
-            if(answer[i+1] == ' '){
-              underscore += '<input type="text" style="margin-right:1em;" maxlength="1" ng-model="guess['+ i +']" class="underscore">';  
+            if (answer[i + 1] == ' ') {
+                underscore += '<input type="text" style="margin-right:1em;" maxlength="1" ng-model="guess[' + i + ']" class="underscore">';
             } else if (answer[i] != ' ') {
-                underscore += '<input type="text" maxlength="1" ng-model="guess['+ i +']" class="underscore">';
+                underscore += '<input type="text" maxlength="1" ng-model="guess[' + i + ']" class="underscore">';
             } else {
-                $scope.user = user;    
+                $scope.user = user;
                 underscore += '<span></span>';
             }
         }
@@ -98,12 +101,12 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
     $scope.boxes = challenge.selectedChallenge.answer;
 
     $scope.usePoints = function() {
-        $http.post("http://a11oy.com:3010/takePoints", {
+        $http.post("http://192.168.1.67:3000/takePoints", {
             id: user.data.id
         }).success(function(data) {
             $scope.coins -= 5;
             user.data.coins -= 5;
-        });  
+        });
     }
 
     $scope.letterClue = function() {
@@ -114,7 +117,7 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
         }
         var getIndex = answer.indexOf(clue);
         var id = "box" + getIndex;
-        if($scope.coins >= 5){
+        if ($scope.coins >= 5) {
             $scope.usePoints();
             $scope.guess[getIndex] = clue;
             document.getElementById(id).readOnly = true;
@@ -123,8 +126,8 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
         }
     }
 
-    $scope.giveEmojiClue = function(){
-        if($scope.coins >= 5){
+    $scope.giveEmojiClue = function() {
+        if ($scope.coins >= 5) {
             $scope.clueGiven = true;
             $scope.usePoints();
         } else {
@@ -136,13 +139,13 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
         var answer = challenge.selectedChallenge.answer;
         answer = answer.replace(/\s+/g, '');
         var usersGuess = guess.join("");
-        
+
         if (usersGuess.toUpperCase() === answer.toUpperCase()) {
             $scope.coins += 5;
             user.data.coins = $scope.coins;
             $scope.success.show();
         } else {
-            $http.post("http://a11oy.com:3010/try", {
+            $http.post("http://192.168.1.67:3000/try", {
                 _id: challenge.selectedChallenge._id
             }).success(function(data) {});
             challenge.selectedChallenge.tries += 1;
@@ -161,19 +164,19 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
         current = document.querySelector(current);
         next = document.querySelector(next);
 
-        if(next != null){
-            if(next.tagName != 'INPUT' || next.readOnly){
+        if (next != null) {
+            if (next.tagName != 'INPUT' || next.readOnly) {
                 next = '#box' + (index + 2);
                 next = document.querySelector(next);
-                }
+            }
 
-            if(current.value.length > 0){
+            if (current.value.length > 0) {
                 next.focus()
-            }   
-        }    
+            }
+        }
     }
 
-        // Load the modal from the given template URL
+    // Load the modal from the given template URL
     $ionicModal.fromTemplateUrl('modal.html', {
         scope: $scope,
         animation: 'jelly'
@@ -189,14 +192,14 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
         $scope.fail = modal;
     });
     $scope.failed = function() {
-        $http.post("http://a11oy.com:3010/fail", {
+        $http.post("http://192.168.1.67:3000/fail", {
             _id: challenge.selectedChallenge._id
         }).success(function(data) {
             window.location = "#/home";
         });
     };
 
-     // Load the modal from the given template URL
+    // Load the modal from the given template URL
     $ionicModal.fromTemplateUrl('success.html', {
         scope: $scope,
         animation: 'jelly'
@@ -204,14 +207,14 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
         $scope.success = modal;
     });
     $scope.gotIt = function() {
-        $http.post("http://a11oy.com:3010/answer", {
-            _id: challenge.selectedChallenge._id,
-            opponent: challenge.selectedChallenge.opponent,
-            challenger: challenge.selectedChallenge.challenger
-        })
-        .success(function(data) {
-            location.href = "#/home";
-        });
+        $http.post("http://192.168.1.67:3000/answer", {
+                _id: challenge.selectedChallenge._id,
+                opponent: challenge.selectedChallenge.opponent,
+                challenger: challenge.selectedChallenge.challenger
+            })
+            .success(function(data) {
+                location.href = "#/home";
+            });
     };
 })
 
@@ -269,13 +272,13 @@ emojinary.controller('appCtrl', function($scope, pushNotify) {})
         $scope.data.clue.splice(index, 1);
     }
 
-    $scope.changeInput = function(input){
+    $scope.changeInput = function(input) {
         $scope.emojiInput = input;
     }
 
     $scope.buildCaption = function(icon) {
         console.log($scope.emojiInput);
-        if($scope.emojiInput == 'caption'){
+        if ($scope.emojiInput == 'caption') {
             $scope.$apply(function() {
                 if ($scope.data.caption.length <= 2) {
                     $scope.data.caption.push(icon);

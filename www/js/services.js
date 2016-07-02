@@ -1,4 +1,4 @@
-emojinary.factory('user', function (ngFB, $http, pushNotify) {
+emojinary.factory('user', function (ngFB, $http) {
 	var obj = {};
 
     obj.getFullUser = function(){
@@ -8,7 +8,7 @@ emojinary.factory('user', function (ngFB, $http, pushNotify) {
                 fields: 'id,name'
             }
 	   }).then(function(fbUser){
-            $http.get("http://a11oy.com:3010/user?id="+fbUser.id).success(function(userSet){
+            $http.get("http://192.168.1.67:3000/user?id="+fbUser.id).success(function(userSet){
                 obj.data = userSet;
                 obj.data.name = fbUser.name;
                 window.location = '#/home'
@@ -22,50 +22,6 @@ emojinary.factory('user', function (ngFB, $http, pushNotify) {
 
 	return obj;
 })
-
-
-.factory('pushNotify', function($rootScope, $http, $cordovaPush){
-	var obj = {data:{}};
-	var userID2;
-	obj.register = function(userID){
-		userID2 = userID;
-		var androidConfig = {
-			"senderID": "475608260286",
-		};
-		$cordovaPush.register(androidConfig).then(function (result) {},function (err) {});
-	};
-
-
-	$rootScope.$on('$cordovaPush:notificationReceived', function (event, notification) {
-		switch (notification.event) {
-		case 'registered':
-			if (notification.regid.length > 0) {
-				$http.post("http://a11oy.com:3010/setRegid", {
-					id: userID2,
-					regid:notification.regid
-				}).success(function(res){
-					alert("got it!");
-				});
-			}
-			break;
-
-		case 'message':
-			// this is the actual push notification. its format depends on the data model from the push server
-			alert('message = ' + notification.message + ' msgCount = ' + notification.msgcnt);
-			break;
-
-		case 'error':
-			alert('GCM error = ' + notification.msg);
-			break;
-
-		default:
-			alert('An unknown GCM event has occurred');
-			break;
-		}
-	});
-	return obj;
-})
-
 
 .factory('friends', function (ngFB, $http) {
 	var obj = {};
@@ -85,7 +41,7 @@ emojinary.factory('user', function (ngFB, $http, pushNotify) {
 		for(var i = 0; i < users.data.length; i++){
 			ids.push(users.data[i].id);
 		}
-		$http.get("http://a11oy.com:3010/users?ids="+ids).success(function(usersSet){
+		$http.get("http://192.168.1.67:3000/users?ids="+ids).success(function(usersSet){
 			for(var i = 0; i < usersSet.length; i++){
 				for(var ii = 0; ii < users.data.length; ii++){
 					if(usersSet[i].id === users.data[ii].id){
@@ -122,7 +78,7 @@ emojinary.factory('user', function (ngFB, $http, pushNotify) {
 			clue: clue
 		};
 		console.log(challenge);
-		$http.post("http://a11oy.com:3010/challenge", challenge)
+		$http.post("http://192.168.1.67:3000/challenge", challenge)
 			.success(function(data){
 				$ionicLoading.show({
 			      duration: 2000,
@@ -145,7 +101,7 @@ emojinary.factory('user', function (ngFB, $http, pushNotify) {
             window.location = '#/';
             return;
         }
-		return $http.get("http://a11oy.com:3010/challenges?id="+user.data.id);
+		return $http.get("http://192.168.1.67:3000/challenges?id="+user.data.id);
 	}
 
 	obj.selectChallenge = function(chal){

@@ -20,15 +20,15 @@
   "cordovaPlugins": [
     "ionic-plugin-keyboard",
     "cordova-plugin-inappbrowser",
-    "cordova-plugin-whitelist"
+    "cordova-plugin-whitelist",
+    "cordova-plugin-inappbrowser",
     {
       "variables": {
         "SENDER_ID": "385235178550"
       },
       "locator": "phonegap-plugin-push",
       "id": "phonegap-plugin-push"
-    },
-    "cordova-plugin-inappbrowser"
+    }
   ],
   "cordovaPlatforms": []
 }
