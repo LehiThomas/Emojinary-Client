@@ -8,7 +8,7 @@ emojinary.factory('user', function (ngFB, $http) {
                 fields: 'id,name'
             }
 	   }).then(function(fbUser){
-            $http.get("http://192.168.1.67:3000/user?id="+fbUser.id).success(function(userSet){
+            $http.get("http://127.0.0.1:3000/user?id="+fbUser.id).success(function(userSet){
                 obj.data = userSet;
                 obj.data.name = fbUser.name;
                 window.location = '#/home'
@@ -41,7 +41,7 @@ emojinary.factory('user', function (ngFB, $http) {
 		for(var i = 0; i < users.data.length; i++){
 			ids.push(users.data[i].id);
 		}
-		$http.get("http://192.168.1.67:3000/users?ids="+ids).success(function(usersSet){
+		$http.get("http://127.0.0.1:3000/users?ids="+ids).success(function(usersSet){
 			for(var i = 0; i < usersSet.length; i++){
 				for(var ii = 0; ii < users.data.length; ii++){
 					if(usersSet[i].id === users.data[ii].id){
@@ -78,7 +78,7 @@ emojinary.factory('user', function (ngFB, $http) {
 			clue: clue
 		};
 		console.log(challenge);
-		$http.post("http://192.168.1.67:3000/challenge", challenge)
+		$http.post("http://127.0.0.1:3000/challenge", challenge)
 			.success(function(data){
 				$ionicLoading.show({
 			      duration: 2000,
@@ -101,7 +101,7 @@ emojinary.factory('user', function (ngFB, $http) {
             window.location = '#/';
             return;
         }
-		return $http.get("http://192.168.1.67:3000/challenges?id="+user.data.id);
+		return $http.get("http://127.0.0.1:3000/challenges?id="+user.data.id);
 	}
 
 	obj.selectChallenge = function(chal){
